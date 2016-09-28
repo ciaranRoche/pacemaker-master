@@ -16,7 +16,16 @@ public class Main
 {
   public static void main(String[] args) throws IOException
   {
-    FileLogger logger = FileLogger.getLogger();
+	  PacemakerAPI pacemakerAPI = new PacemakerAPI();
+	  
+	  pacemakerAPI.createUser("Bart", "Simpson", "bart@simpson.com", "secret");
+	  pacemakerAPI.createUser("Homer", "Simpson", "homer@simpson.com", "secret");
+	  pacemakerAPI.createUser("Lisa", "Simpson","lisa@simpson.com", "secret");
+	  
+	  List<User>users = pacemakerAPI.getUsers();
+	  System.out.println(users);
+  }
+    /**FileLogger logger = FileLogger.getLogger();
     logger.log("Creating user list");
     
     List<User> users = new ArrayList<User>();
@@ -32,5 +41,5 @@ public class Main
     out.close();    
     
     logger.log("Finished - shutting down");
-  }
+  }**/
 }
