@@ -9,9 +9,10 @@ public class User
   public String lastName;
   public String email;
   public String password;
+  static Long   counter = 0l; 
+  public Long id;
   
-  public User()
-  {
+  public User() {
   }
   
   public User(String firstName, String lastName, String email, String password)
@@ -20,6 +21,7 @@ public class User
     this.lastName = lastName;
     this.email = email;
     this.password = password;
+    this.id = counter++;
   }
   
   @Override

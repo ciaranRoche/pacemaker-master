@@ -1,9 +1,9 @@
 package controllers;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
+//import java.util.List;
 import java.util.Map;
 
 import models.User;
@@ -11,17 +11,18 @@ import models.User;
 public class PacemakerAPI {
 
 	//private List<User> users= new ArrayList<User>();
-	private Map<String, User> users = new HashMap<String, User>();
-	
+	private Map<Long, User> userIndex = new HashMap<>();
+	private Map<String, User> emailIndex = new HashMap<>();
 	/**public List<User> getUsers(){
 		return users;
 	}**/
 	public Collection<User>getUsers(){
-		return users.values();
+		return userIndex.values();
 	}
 	
 	public void deleteUsers(){
-		users.clear();
+		userIndex.clear();
+		emailIndex.clear();
 	}
 	
 	/**public User createUser(String firstName, String lastName, String email, String password){
@@ -31,7 +32,8 @@ public class PacemakerAPI {
 	}**/
 	public User createUser(String firstName, String lastName, String email, String password){
 		User user = new User(firstName, lastName, email, password);
-		users.put(email, user);
+		userIndex.put(user.id, user);
+		emailIndex.put(email, user);
 		return user;
 	}
 	
@@ -40,8 +42,12 @@ public class PacemakerAPI {
 			if(email.equals(user.email))
 				return user;
 		}**/
-	public User getUser(String email){
-		return users.get(email);
+	public User getUserByEmail(String email){
+		return emailIndex.get(email);
+	}
+	
+	public User getUser(Long id){
+		return userIndex.get(id);
 	}
 	
 	/**public void deleteUser(String email){
@@ -53,8 +59,9 @@ public class PacemakerAPI {
 			users.remove(foundUser);
 		}
 	}**/
-	public void deleteUser(String email){
-		users.remove(email);
+	public void deleteUser(Long id){
+		User user = userIndex.remove(id);
+		emailIndex.remove(user.email);
 	}
 	
 }
