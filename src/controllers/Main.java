@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import com.thoughtworks.xstream.XStream;
@@ -22,7 +23,7 @@ public class Main
 	  pacemakerAPI.createUser("Homer", "Simpson", "homer@simpson.com", "secret");
 	  pacemakerAPI.createUser("Lisa", "Simpson","lisa@simpson.com", "secret");
 	  
-	  List<User>users = pacemakerAPI.getUsers();
+	  Collection<User>users = pacemakerAPI.getUsers();
 	  System.out.println(users);
   }
     /**FileLogger logger = FileLogger.getLogger();
