@@ -5,26 +5,15 @@ import static org.junit.Assert.*;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import static models.Fixtures.users;
 
 public class UserTest {
 	
-
-	//User homer = new User("homer", "simpson", "homer@simpson.com", "secret");
 	
-	@Before
-	public void setUp(){
-		User homer = new User("homer", "simpson", "homer@simpson.com", "secret");
-	}
+	User homer = new User("homer", "simpson", "homer@simpson.com", "secret");
 	
-	@After
-	public void tearDown() {
-		homer = null;
-	}
 	
 	@Test
 	public void testCreate(){
