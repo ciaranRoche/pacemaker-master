@@ -6,34 +6,24 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class LocationTest {
-	private Location one;
-	private Location two;
-	
-	@Before
-	public void setup(){
-		one = new Location(23.3f, 33.3f);
-		two = new Location(34.4f, 22.2f);
-	}
+import static models.Fixtures.locations;
 
-	@After
-	public void tearDown(){
-		one=two=null;
-	}
+public class LocationTest {
+
 	@Test
 	public void testCreate(){
-		assertEquals(23.3f, one.latitude, 0.01);
-		assertEquals(33.3f, one.longitude, 0.01);
+		assertEquals(23.3f, locations[0].latitude, 0.01);
+		assertEquals(33.3f, locations[0].longitude, 0.01);
 	}
 	
 	@Test
 	public void testIds(){
-		assertNotEquals(one.id, two.id);
+		assertNotEquals(locations[0].id, locations[1].id);
 	}
 	
 	@Test
 	public void testToString(){
-		assertEquals("Location{2, 23.3, 33.3}", one.toString());
+		assertEquals ("Location{" + locations[0].id + ", 23.3, 33.3}", locations[0].toString());
 	}
 
 }
