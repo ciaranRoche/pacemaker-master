@@ -1,5 +1,10 @@
 package controllers;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 //import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -7,6 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.common.base.Optional;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import models.Activity;
 import models.Location;
@@ -80,5 +87,31 @@ public class PacemakerAPI {
 		if(activity.isPresent()){
 			activity.get().route.add(new Location(latitude,longitude));
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	void load(File file) throws Exception{
+		ObjectInputStream is = null;
+		try{
+			XStream xstream = new XStream(new DomDriver());
+			is = xstream.createObjectInputStream(new FileReader(file));
+			userIndex = (Map<Long, User>) is.readObject();
+			emailIndex = (Map<String, User>) is.readObject();
+			activitiesIndex = (Map<Long, Activity>) is.readObject();
+		}
+		finally{
+			if(is!=null){
+				is.close();
+			}
+		}
+	}
+	
+	void store(File file) throws Exception{
+		XStream xstream = new XStream(new DomDriver());
+		ObjectOutputStream out = xstream.createObjectOutputStream(new FileWriter(file));
+		out.writeObject(userIndex);
+		out.writeObject(emailIndex);
+		out.writeObject(activitiesIndex);
+		out.close();
 	}
 }
