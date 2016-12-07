@@ -18,33 +18,39 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 
 //import utils.FileLogger;
 import models.User;
+import utils.Serializer;
+import utils.XMLSerializer;
 
 public class Main
 {
-  public static void main(String[] args) throws IOException
-  {
-	  PacemakerAPI pacemakerAPI = new PacemakerAPI();
+  public static void main(String[] args) throws Exception{
+	  File datastore = new File("datastore2.xml");
+	  Serializer serializer = new XMLSerializer(datastore);
+	  
+	  PacemakerAPI pacemakerAPI = new PacemakerAPI(serializer);
+	  if(datastore.isFile()){
+		  pacemakerAPI.load();
+	  }
 	  
 	  pacemakerAPI.createUser("Bart", "Simpson", "bart@simpson.com", "secret");
 	  pacemakerAPI.createUser("Homer", "Simpson", "homer@simpson.com", "secret");
 	  pacemakerAPI.createUser("Lisa", "Simpson","lisa@simpson.com", "secret");
-	  pacemakerAPI.createActivity((long) 02, "Drinking", "Geoffs", 6.5);
-	  pacemakerAPI.addLocation((long) 65, 33.2f, 65.2f);
 	  
 	  Collection<User>users = pacemakerAPI.getUsers();
 	  System.out.println(users);
 	  
 	  User homer = pacemakerAPI.getUserByEmail("homer@simpson.com");
-	  System.out.println(homer);
+	  pacemakerAPI.createActivity(homer.id, "drinking pints", "geoffs" , 12.5);
 	  
-	  pacemakerAPI.deleteUser(homer.id);
-	  users = pacemakerAPI.getUsers();
-	  System.out.println(users);
-	  
-	  XStream xstream = new XStream(new DomDriver());
-	  ObjectOutputStream out = xstream.createObjectOutputStream(new FileWriter("datastore.xml"));
-	  out.writeObject(users);
-	  out.close();
+	  pacemakerAPI.store();
+//	  pacemakerAPI.deleteUser(homer.id);
+//	  users = pacemakerAPI.getUsers();
+//	  System.out.println(users);
+//	  
+//	  XStream xstream = new XStream(new DomDriver());
+//	  ObjectOutputStream out = xstream.createObjectOutputStream(new FileWriter("datastore.xml"));
+//	  out.writeObject(users);
+//	  out.close();
 	  
 	  
   }
